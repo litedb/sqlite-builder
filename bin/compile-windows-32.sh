@@ -31,4 +31,4 @@ gcc \
   -DSQLITE_OMIT_DEPRECATED=1 \
   -DSQLITE_THREADSAFE=0 \
   -DSQLITE_USE_URI=1 \
-  -I. src/shell.c src/sqlite3.c -o dist/sqlite3.exe
+  -I. src/shell.c src/sqlite3.c -o dist/sqlite3-32.exe

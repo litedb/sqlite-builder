@@ -41,7 +41,8 @@ class Generator extends GenBase {
   run() {
     this.genLinux();
     this.genMacos();
-    this.genWindows();
+    this.genWindows("32");
+    this.genWindows("64");
   }
 
   genLinux() {
@@ -94,14 +95,14 @@ class Generator extends GenBase {
     this.push("ls -la dist/");
   }
 
-  genWindows() {
-    let path = "bin/compile-windows.sh";
+  genWindows(bits = "64") {
+    let path = `bin/compile-windows-${bits}.sh`;
     this.lines = [];
-    this.windowsContent();
+    this.windowsContent(bits);
     fs.writeFileSync(path, this.content, "utf-8");
   }
 
-  windowsContent() {
+  windowsContent(bits) {
     this.banner();
     this.push("mkdir dist");
     this.push("gcc \\");
@@ -110,7 +111,7 @@ class Generator extends GenBase {
         this.push(`-${flag} \\`);
       });
 
-      this.push("-I. src/shell.c src/sqlite3.c -o dist/sqlite3.exe");
+      this.push(`-I. src/shell.c src/sqlite3.c -o dist/sqlite3-${bits}.exe`);
     });
   }
 
